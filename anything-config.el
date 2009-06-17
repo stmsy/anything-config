@@ -419,7 +419,7 @@ they will be displayed with face `file-name-shadow' if
   "Your prefered sources to find files."
   :type 'list
   :group 'anything-config)
- 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Preconfigured Anything ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun anything-for-files ()
   "Preconfigured `anything' for opening files.
@@ -1477,7 +1477,7 @@ RedOnWhite ==> Directory."
              (eq handlerp 'Info-bookmark-jump)
              (string= bufp "*info*"))
      collect (propertize i 'face '((:foreground "green")))))
-       
+
 
 (defvar anything-c-source-bookmarks-local
   '((name . "Bookmarks-Local")
@@ -2005,7 +2005,7 @@ utility mdfind.")
 
 ;;;; <icicle>
 ;;; Icicle regions
-;; See: http://www.emacswiki.org/emacs-en/Icicles_-_Multiple_Regions 
+;; See: http://www.emacswiki.org/emacs-en/Icicles_-_Multiple_Regions
 ;; That is the anything interface.
 
 (defvar anything-icicle-region-alist nil)
@@ -2046,7 +2046,7 @@ See `icicle-delete-region-from-alist'."
   (funcall icicle-customize-save-variable-function 'icicle-region-alist icicle-region-alist))
 
 (defun anything-c-icicle-region-goto-region (candidate)
-  "Get the position of `candidate' and call `anything-icicle-select-region-action'." 
+  "Get the position of `candidate' and call `anything-icicle-select-region-action'."
   (let ((pos (position candidate anything-icicle-region-alist))
         (buf (second (split-string candidate " => "))))
     (if (equal buf "*info*")
@@ -2331,7 +2331,7 @@ See http://orgmode.org for the latest version.")
                                          (setq anything-c-yaoddmuse-ew-cache
                                                (gethash "EmacsWiki" yaoddmuse-pages-hash)))
                                        (yaoddmuse-update-pagename))))))
-    (action-transformer anything-c-yaoddmuse-action-transformer))) 
+    (action-transformer anything-c-yaoddmuse-action-transformer)))
 
 ;; (anything 'anything-c-source-yaoddmuse-emacswiki-edit-or-view)
 
@@ -2584,7 +2584,7 @@ removed."
 (defvar anything-c-surfraw-favorites '("google" "wikipedia"
                                        "yahoo" "translate"
                                        "codesearch" "genpkg"
-                                       "genportage" "fast" 
+                                       "genportage" "fast"
                                        "currency")
   "All elements of this list will appear first in results.")
 (defvar anything-c-surfraw-use-only-favorites nil
@@ -2638,7 +2638,7 @@ A list of search engines."
                 (setq anything-c-surfraw-elvi (anything-c-surfraw-sort-elvi
                                                anything-c-surfraw-use-only-favorites))
                 (setq anything-c-surfraw-cache
-                      (loop for i in anything-c-surfraw-elvi 
+                      (loop for i in anything-c-surfraw-elvi
                          if (car i)
                          collect (car i))))))
     (candidates . (lambda ()
@@ -2920,7 +2920,7 @@ See also `anything-create--actions'."
                                (set-default-font elm 'keep-size)
                                (message "New font have been copied to kill ring")))))
     (persistent-action . anything-c-persistent-xfont-action)))
-  
+
 ;; (anything 'anything-c-source-xfonts)
 
 ;; Sources for gentoo users
@@ -3793,7 +3793,7 @@ If optional 2nd argument is non-nil, the file opened with `auto-revert-mode'.")
       (1
        (setq buf1 anything-current-buffer
              buf2 (first anything-c-marked-candidate-list)))
-      (2 
+      (2
        (setq buf1 (first anything-c-marked-candidate-list)
              buf2 (second anything-c-marked-candidate-list)))
       (t
