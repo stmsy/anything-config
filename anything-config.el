@@ -1343,15 +1343,23 @@ word in the function's name, e.g. \"bb\" is an abbrev for
 
 (define-anything-type-attribute 'bm
   '((display-to-real . (lambda (candidate)
-                         (bm-bookmark-at
-                          (save-excursion
-                            (goto-line (car (anything-c-display-to-real-line candidate)))
-                            (line-beginning-position)))))
-    (action . (("Jump to Bookmark" . bm-goto)
+                         (save-excursion
+                           (unless (string-match "^ *\\([0-9]+\\): \\[\\(.+\\)\\]: <\\(.+\\)>.*$" candidate)
+                             (error "Bookmark specification not found."))
+                           (let ((line (string-to-number (match-string 1 candidate)))
+                                 (annotation (match-string 2 candidate))
+                                 (buffer (get-buffer (match-string 3 candidate))))
+                             (with-current-buffer buffer
+                               (goto-line line)
+                               (bm-bookmark-at (line-beginning-position)))))))
+    (action . (("Jump to Bookmark" . (lambda (bookmark)
+                                       (switch-to-buffer (overlay-buffer bookmark))
+                                       (bm-goto bookmark)))
                ("Delete Bookmark" . (lambda (bookmark)
-                                      (if (y-or-n-p (format "Really delete bookmark %s? "
+                                      (with-current-buffer (overlay-buffer bookmark)
+                                        (if (y-or-n-p (format "Really delete bookmark %s? "
                                                             (overlay-get bookmark 'annotation)))
-                                          (bm-bookmark-remove bookmark)))))))
+                                          (bm-bookmark-remove bookmark))))))))
   "Visible Bookmarks type.")
 
 ;;; Visible Bookmarks
@@ -1385,9 +1393,10 @@ http://www.nongnu.org/bm/")
                 (end (overlay-end bm))
                 (annotation (or (overlay-get bm 'annotation) "")))
             (unless (< (- end start) 1) ; org => (if (< (- end start) 2)
-              (setq str (format "%7d: [%s]: %s\n"
+              (setq str (format "%7d: [%-20.20s]: <%s> %s\n"
                                 (line-number-at-pos start)
                                 annotation
+                                (buffer-name)
                                 (buffer-substring start (1- end)))))))
         (with-current-buffer buf (insert str))))))
 
