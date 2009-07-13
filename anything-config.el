@@ -1357,9 +1357,7 @@ word in the function's name, e.g. \"bb\" is an abbrev for
                                        (bm-goto bookmark)))
                ("Delete Bookmark" . (lambda (bookmark)
                                       (with-current-buffer (overlay-buffer bookmark)
-                                        (if (y-or-n-p (format "Really delete bookmark %s? "
-                                                            (overlay-get bookmark 'annotation)))
-                                          (bm-bookmark-remove bookmark))))))))
+                                        (bm-bookmark-remove bookmark)))))))
   "Visible Bookmarks type.")
 
 ;;; Visible Bookmarks
