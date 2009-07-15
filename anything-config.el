@@ -440,8 +440,6 @@ they will be displayed with face `file-name-shadow' if
   :type 'list
   :group 'anything-config)
 
-<<<<<<< HEAD:anything-config.el
-=======
 (defcustom anything-create--actions-private nil
   "User defined actions for `anything-create' / `anything-c-source-create'.
 It is a list of (DISPLAY . FUNCTION) pairs like `action'
@@ -456,7 +454,6 @@ It is prepended to predefined pairs."
   :type 'boolean
   :group 'anything-config)
 
->>>>>>> origin/master:anything-config.el
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Preconfigured Anything ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun anything-for-files ()
   "Preconfigured `anything' for opening files.
@@ -1574,17 +1571,17 @@ RedOnWhite ==> Directory."
      for handlerp = (and (fboundp 'bookmark-get-handler)
                          (bookmark-get-handler i))
      ;; directories
-     if (and pred 
+     if (and pred
              (file-directory-p pred))
      collect (propertize i 'face anything-c-bookmarks-face1 'help-echo pred)
      ;; regular files
-     if (and pred 
+     if (and pred
              (not (file-directory-p pred))
              (file-exists-p pred)
              (not regp))
      collect (propertize i 'face anything-c-bookmarks-face2 'help-echo pred)
      ;; regular files with regions saved
-     if (and pred 
+     if (and pred
              (not (file-directory-p pred))
              (file-exists-p pred)
              regp)
@@ -1609,7 +1606,7 @@ RedOnWhite ==> Directory."
              (eq handlerp 'Info-bookmark-jump)
              (string= bufp "*info*"))
      collect (propertize i 'face '((:foreground "green")) 'help-echo pred)))
-       
+
 
 (defvar anything-c-source-bookmarks-local
   '((name . "Bookmarks-Local")
@@ -2251,12 +2248,12 @@ If this action is executed just after `yank', replace with STR as yanked string.
          with marks = (cons (mark-marker) mark-ring)
          with recip = nil
          for i in marks
-         for f = (get-marks i) 
+         for f = (get-marks i)
          if (not (member f recip))
          do
            (push f recip)
          finally (return (reverse recip))))))
-           
+
 (defvar anything-mark-ring-cache nil)
 (defvar anything-c-source-mark-ring
   '((name . "mark-ring")
@@ -2292,7 +2289,7 @@ If this action is executed just after `yank', replace with STR as yanked string.
                              (switch-to-buffer (second items))
                              (goto-line (string-to-number (car items)))
                              (anything-match-line-color-current-line))))))
-                             
+
 (defun anything-c-source-global-mark-ring-candidates ()
   (flet ((buf-fn (m)
            (with-current-buffer (marker-buffer m)
@@ -2305,7 +2302,7 @@ If this action is executed just after `yank', replace with STR as yanked string.
                (format "%7d:%s:    %s" (line-number-at-pos) (marker-buffer m) line)))))
     (loop
        with marks = global-mark-ring
-       with recip = nil  
+       with recip = nil
        for i in marks
        if (not (or (string-match "^ " (format "%s" (marker-buffer i)))
                    (null (marker-buffer i))))
@@ -3147,7 +3144,7 @@ See also `anything-create--actions'."
     (init . (lambda ()
               (unless anything-c-xfonts-cache
                 (setq anything-c-xfonts-cache
-                      (x-list-fonts "*")))))  
+                      (x-list-fonts "*")))))
     (candidates . anything-c-xfonts-cache)
     (multiline)
     (volatile)
